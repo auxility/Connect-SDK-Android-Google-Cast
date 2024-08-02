@@ -21,6 +21,8 @@
 package com.connectsdk.discovery.provider;
 
 import android.content.Context;
+
+import androidx.annotation.Keep;
 import androidx.mediarouter.media.MediaRouteSelector;
 import androidx.mediarouter.media.MediaRouter;
 import androidx.mediarouter.media.MediaRouter.RouteInfo;
@@ -43,6 +45,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Keep
 public class CastDiscoveryProvider implements DiscoveryProvider {
     private static final long ROUTE_REMOVE_INTERVAL = 3000;
 
