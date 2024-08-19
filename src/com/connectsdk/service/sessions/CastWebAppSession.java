@@ -20,8 +20,6 @@
 
 package com.connectsdk.service.sessions;
 
-import android.util.Log;
-
 import com.connectsdk.core.Util;
 import com.connectsdk.service.CastService;
 import com.connectsdk.service.DeviceService;
@@ -38,6 +36,8 @@ import com.google.android.gms.common.api.Status;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import ca.auxility.tvrc.logger.core.LoggerManager;
 
 public class CastWebAppSession extends WebAppSession {
     private CastService service;
@@ -84,7 +84,7 @@ public class CastWebAppSession extends WebAppSession {
             Cast.CastApi.removeMessageReceivedCallbacks(service.getApiClient(), castServiceChannel.getNamespace());
             castServiceChannel = null;
         } catch (IOException e) {
-            Log.e(Util.T, "Exception while removing application", e);
+            LoggerManager.Companion.getInstance().log(Util.T + "Exception while removing application" + e);
         }
 
         Cast.CastApi.leaveApplication(service.getApiClient());

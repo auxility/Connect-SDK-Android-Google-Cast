@@ -73,6 +73,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import ca.auxility.tvrc.logger.core.LoggerManager;
+
 public class CastService extends DeviceService implements MediaPlayer, MediaControl, VolumeControl, WebAppLauncher {
     private static final long MEDIA_TRACK_ID = 1;
 
@@ -358,7 +360,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
             try {
                 mCastClient.leaveApplication(mApiClient);
             } catch (CastClientException e) {
-                Log.e(Util.T, "Closing application error", e);
+                LoggerManager.Companion.getInstance().log(Util.T + "Closing application error" + e);
             }
             mApiClient.disconnect();
         }
@@ -620,7 +622,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
             try {
                 mCastClient.setMessageReceivedCallbacks(mApiClient, mMediaPlayer.getNamespace(), mMediaPlayer);
             } catch (Exception e) {
-                Log.w(Util.T, "Exception while creating media channel", e);
+                LoggerManager.Companion.getInstance().log(Util.T + "Exception while creating media channel" + e);
             }
         }
     }
@@ -634,7 +636,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
             try {
                 mCastClient.removeMessageReceivedCallbacks(mApiClient, mMediaPlayer.getNamespace());
             } catch (CastClientException e) {
-                Log.w(Util.T, "Exception while launching application", e);
+                LoggerManager.Companion.getInstance().log(Util.T + "Exception while launching application" + e);
             }
         }
         mMediaPlayer = null;
@@ -1308,7 +1310,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     private class CastListener extends Cast.Listener {
         @Override
         public void onApplicationDisconnected(int statusCode) {
-            Log.d(Util.T, "Cast.Listener.onApplicationDisconnected: " + statusCode);
+            LoggerManager.Companion.getInstance().log(Util.T + "Cast.Listener.onApplicationDisconnected: " + statusCode);
 
             if (currentAppId == null)
                 return;
@@ -1337,7 +1339,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
                                 currentAppId = applicationMetadata.getApplicationId();
                             }
                         } catch (CastClientException e) {
-                            Log.e(Util.T, "Error in onApplicationStatusChanged", e);
+                            LoggerManager.Companion.getInstance().log(Util.T + "Error in onApplicationStatusChanged" + e);
                         }
                     }
                 }
@@ -1389,7 +1391,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     private class ConnectionCallbacks implements GoogleApiClient.ConnectionCallbacks {
         @Override
         public void onConnectionSuspended(final int cause) {
-            Log.d(Util.T, "ConnectionCallbacks.onConnectionSuspended");
+            LoggerManager.Companion.getInstance().log(Util.T + "ConnectionCallbacks.onConnectionSuspended");
 
             mWaitingForReconnect = true;
             detachMediaPlayer();
@@ -1397,7 +1399,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
 
         @Override
         public void onConnected(Bundle connectionHint) {
-            Log.d(Util.T, "ConnectionCallbacks.onConnected, wasWaitingForReconnect: " + mWaitingForReconnect);
+            LoggerManager.Companion.getInstance().log(Util.T + "ConnectionCallbacks.onConnected, wasWaitingForReconnect: " + mWaitingForReconnect);
 
             attachMediaPlayer();
 
@@ -1412,7 +1414,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
                                 }
                             });
                 } catch (CastClientException e) {
-                    Log.e(Util.T, "join application error", e);
+                    LoggerManager.Companion.getInstance().log(Util.T + "join application error" + e);
                 }
             }
         }
@@ -1467,7 +1469,7 @@ public class CastService extends DeviceService implements MediaPlayer, MediaCont
     private class ConnectionFailedListener implements GoogleApiClient.OnConnectionFailedListener {
         @Override
         public void onConnectionFailed(final ConnectionResult result) {
-            Log.d(Util.T, "ConnectionFailedListener.onConnectionFailed " + (result != null ? result: ""));
+            LoggerManager.Companion.getInstance().log(Util.T + "ConnectionFailedListener.onConnectionFailed " + (result != null ? result: ""));
 
             detachMediaPlayer();
             connected = false;

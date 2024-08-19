@@ -45,6 +45,8 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import ca.auxility.tvrc.logger.core.LoggerManager;
+
 @Keep
 public class CastDiscoveryProvider implements DiscoveryProvider {
     private static final long ROUTE_REMOVE_INTERVAL = 3000;
@@ -87,7 +89,7 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
                         CastService.getApplicationID()))
                 .build();
             } catch (IllegalArgumentException e) {
-                Log.w(Util.T, "Invalid application ID: " + CastService.getApplicationID());
+                LoggerManager.Companion.getInstance().log(Util.T + "Invalid application ID: " + CastService.getApplicationID());
                 for (DiscoveryProviderListener listener : serviceListeners) {
                     listener.onServiceDiscoveryFailed(this, new ServiceCommandError(0,
                             "Invalid application ID: " + CastService.getApplicationID(), null));
@@ -263,7 +265,7 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
         @Override
         public void onRoutePresentationDisplayChanged(MediaRouter router,
                 RouteInfo route) {
-            Log.d(Util.T, "onRoutePresentationDisplayChanged: [" + route.getName() + "] ["
+            LoggerManager.Companion.getInstance().log(Util.T + "onRoutePresentationDisplayChanged: [" + route.getName() + "] ["
                     + route.getDescription() + "]");
             super.onRoutePresentationDisplayChanged(router, route);
         }
@@ -295,7 +297,7 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
 
         @Override
         public void onRouteVolumeChanged(MediaRouter router, RouteInfo route) {
-            Log.d(Util.T, "onRouteVolumeChanged: [" + route.getName() + "] ["
+            LoggerManager.Companion.getInstance().log(Util.T + "onRouteVolumeChanged: [" + route.getName() + "] ["
                     + route.getDescription() + "]");
             super.onRouteVolumeChanged(router, route);
         }
@@ -304,7 +306,7 @@ public class CastDiscoveryProvider implements DiscoveryProvider {
             for (String uuid : removedUUID) {
                 final ServiceDescription service = foundServices.get(uuid);
                 if (service != null) {
-                    Log.d(Util.T, "Service [" + route.getName() + "] has been removed");
+                    LoggerManager.Companion.getInstance().log(Util.T + "Service [" + route.getName() + "] has been removed");
                     Util.runOnUI(new Runnable() {
 
                         @Override
