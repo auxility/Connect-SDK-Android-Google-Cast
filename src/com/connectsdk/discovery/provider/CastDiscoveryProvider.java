@@ -26,7 +26,6 @@ import androidx.annotation.Keep;
 import androidx.mediarouter.media.MediaRouteSelector;
 import androidx.mediarouter.media.MediaRouter;
 import androidx.mediarouter.media.MediaRouter.RouteInfo;
-import android.util.Log;
 
 import com.connectsdk.core.Util;
 import com.connectsdk.discovery.DiscoveryFilter;
@@ -45,7 +44,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import ca.auxility.tvrc.logger.core.LoggerManager;
+import com.app.auxility.ca.my.universal.tv.remote.control.logger.core.LoggerManager;
 
 @Keep
 public class CastDiscoveryProvider implements DiscoveryProvider {

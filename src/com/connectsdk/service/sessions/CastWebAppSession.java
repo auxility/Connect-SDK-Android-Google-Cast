@@ -37,7 +37,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import ca.auxility.tvrc.logger.core.LoggerManager;
+import com.app.auxility.ca.my.universal.tv.remote.control.logger.core.LoggerManager;
 
 public class CastWebAppSession extends WebAppSession {
     private CastService service;
